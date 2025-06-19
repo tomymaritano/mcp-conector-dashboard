@@ -17,10 +17,13 @@ interface Message {
   content: string
 }
 
-const MCPConsole: React.FC = () => {
+interface MCPConsoleProps {
+  models: { id: string; label: string }[]
+}
+
+const MCPConsole: React.FC<MCPConsoleProps> = ({ models }) => {
   const [prompt, setPrompt] = useState('')
-  // Default to the OpenAI server defined in `mcp.config.json`
-  const [modelId, setModelId] = useState('openai')
+  const [modelId, setModelId] = useState(models[0]?.id ?? '')
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)
@@ -51,10 +54,16 @@ const MCPConsole: React.FC = () => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
+  useEffect(() => {
+    if (models.length > 0) {
+      setModelId(models[0].id)
+    }
+  }, [models])
+
   return (
     <div className="flex flex-col h-full w-full bg-black text-green-400 font-mono border border-green-500/30 rounded-xl shadow-inner shadow-green-500/10 p-4">
       <div className="flex-1 overflow-y-auto custom-scroll space-y-3 pr-2 mb-3">
-        <AIModelSelector onSelect={setModelId} />
+        <AIModelSelector models={models} onSelect={setModelId} />
         {messages.map((msg, idx) => (
           <div
             key={idx}

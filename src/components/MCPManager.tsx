@@ -22,8 +22,17 @@ interface MCPEntry {
   status: MCPStatus
 }
 
+const LABELS: Record<string, string> = {
+  openai: 'OpenAI GPT-4',
+  anthropic: 'Anthropic Claude 3',
+  mistral: 'Mistral 7B',
+  llama: 'Meta LLaMA',
+  grok: 'Grok (xAI)',
+}
+
 const MCPManager: React.FC = () => {
   const [servers, setServers] = useState<MCPEntry[]>([])
+  const [models, setModels] = useState<{ id: string; label: string }[]>([])
 
   useEffect(() => {
     fetch('mcp.config.json')
@@ -35,6 +44,12 @@ const MCPManager: React.FC = () => {
           status: 'offline',
         }))
         setServers(loaded)
+
+        const available = Object.keys(data.mcpServers).map(id => ({
+          id,
+          label: LABELS[id] || id,
+        }))
+        setModels(available)
       })
 
     if (window.electronAPI?.onStatusUpdate) {
@@ -129,7 +144,7 @@ const MCPManager: React.FC = () => {
       {/* Console */}
       <main className="flex-1 flex flex-col p-6 overflow-hidden bg-zinc-950/80">
         <section className="flex-1 overflow-hidden border border-green-400/10 rounded-xl shadow-inner shadow-green-300/5 backdrop-blur-md">
-          <MCPConsole />
+          <MCPConsole models={models} />
         </section>
       </main>
     </div>
