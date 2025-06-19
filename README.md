@@ -36,3 +36,22 @@ export default {
 2025-06-18 23:06:39.174 Electron[71655:42236000] Text input context does not respond to _valueForTIProperty:
 11:07:08 PM [vite] page reload mcp.config.json
 ```
+## Environment configuration
+
+The application expects a `.env` file in the project root containing API keys that MCP servers use to communicate with external providers.  A template is available in [`.env.example`](./.env.example).
+
+1. Copy the template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Obtain your provider keys and fill in the values:
+   - **OpenAI** – Create a key at <https://platform.openai.com/account/api-keys> and set `OPENAI_API_KEY`.
+   - **Anthropic/Claude** – Create a key at <https://console.anthropic.com/> and set `ANTHROPIC_API_KEY`.
+
+## Running and using MCPs
+
+Start the application in development mode:
+```bash
+npm run dev
+```
+A window will open listing available MCP modules. Enable the one you want by toggling the switch next to its name. When the status shows `online`, select a model in the console panel, type a prompt and press **Enter** (or click **Enviar**) to send it to the running MCP.
