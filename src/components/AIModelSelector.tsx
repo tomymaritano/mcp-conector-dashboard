@@ -3,6 +3,7 @@ import { ChevronDown, Bot, Check } from 'lucide-react'
 import React, { useState } from 'react'
 
 const AI_MODELS = [
+  // The `id` values must match the keys defined in `mcp.config.json`
   { id: 'openai', label: 'OpenAI GPT-4' },
   { id: 'anthropic', label: 'Anthropic Claude 3' },
   { id: 'mistral', label: 'Mistral 7B' },

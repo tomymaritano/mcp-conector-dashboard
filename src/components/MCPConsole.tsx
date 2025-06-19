@@ -19,6 +19,7 @@ interface Message {
 
 const MCPConsole: React.FC = () => {
   const [prompt, setPrompt] = useState('')
+  // Default to the OpenAI server defined in `mcp.config.json`
   const [modelId, setModelId] = useState('openai')
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
