@@ -1,48 +1,57 @@
-# Inkrun MCP Manager
+# React + TypeScript + Vite
 
-Esta aplicación usa Electron y React para administrar distintos servidores MCP (Model Context Protocol) desde una interfaz gráfica.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Puesta en marcha
+Currently, two official plugins are available:
 
-1. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-2. Inicia el modo de desarrollo:
-   ```bash
-   npm run dev
-   ```
-   Se abrirá una ventana de Electron con la UI.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Configuración de `mcp.config.json`
+## Expanding the ESLint configuration
 
-El archivo `mcp.config.json` define qué MCPs se pueden lanzar. Cada entrada indica el comando, sus argumentos y las variables de entorno necesarias. Sustituí los placeholders por tus credenciales reales. Ejemplo para el servidor de GitHub:
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-```json
-{
-  "github": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-github"],
-    "env": {
-      "GITHUB_PERSONAL_ACCESS_TOKEN": "<tu_token>"
-    }
-  }
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
 }
 ```
 
-Tokens habituales que deberás completar:
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# inkrun
 
-- `GITHUB_PERSONAL_ACCESS_TOKEN` para GitHub
-- `SLACK_BOT_TOKEN` y `SLACK_TEAM_ID` para Slack
-- `NOTION_TOKEN` para Notion
-- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` y `GOOGLE_REFRESH_TOKEN` para Google Drive
-- `OPENAI_API_KEY` para el servidor de OpenAI
+``` These errors are common in MACOSX
+2025-06-18 23:06:39.174 Electron[71655:42236000] _TIPropertyValueIsValid called with 16 on nil context!
+2025-06-18 23:06:39.174 Electron[71655:42236000] imkxpc_getApplicationProperty:reply: called with incorrect property value 16, bailing.
+2025-06-18 23:06:39.174 Electron[71655:42236000] Text input context does not respond to _valueForTIProperty:
+11:07:08 PM [vite] page reload mcp.config.json
+```
+## Environment configuration
 
-Guardá los cambios y la aplicación recargará la configuración automáticamente.
+The application expects a `.env` file in the project root containing API keys that MCP servers use to communicate with external providers.  A template is available in [`.env.example`](./.env.example).
 
-## Uso de la interfaz
+1. Copy the template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Obtain your provider keys and fill in the values:
+   - **OpenAI** – Create a key at <https://platform.openai.com/account/api-keys> and set `OPENAI_API_KEY`.
+   - **Anthropic/Claude** – Create a key at <https://console.anthropic.com/> and set `ANTHROPIC_API_KEY`.
 
-Al arrancar la app verás una barra lateral con todos los MCPs listados. Usá el interruptor de cada uno para encenderlo o apagarlo. El estado puede ser `offline`, `starting`, `online` o `error`.
+## Running and using MCPs
 
-En la consola principal tenés un selector de modelo de IA. Elegí el modelo, escribí tu prompt en el cuadro inferior y presioná **Enviar** o la tecla Enter. La respuesta del MCP aparecerá en el panel.
-
+Start the application in development mode:
+```bash
+npm run dev
+```
+A window will open listing available MCP modules. Enable the one you want by toggling the switch next to its name. When the status shows `online`, select a model in the console panel, type a prompt and press **Enter** (or click **Enviar**) to send it to the running MCP.
