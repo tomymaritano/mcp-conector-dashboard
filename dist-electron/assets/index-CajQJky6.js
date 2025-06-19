@@ -24394,7 +24394,7 @@ const MCPConsole = () => {
   const [prompt, setPrompt] = reactExports.useState("");
   const [response, setResponse] = reactExports.useState("");
   const handleSend = async () => {
-    const res = await window.api.sendToMCP(prompt);
+    const res = await window.electronAPI.sendToMCP(prompt);
     setResponse(res);
   };
   return /* @__PURE__ */ jsxDevRuntimeExports.jsxDEV("div", { children: [

@@ -24396,8 +24396,8 @@ const MCPConsole = () => {
   const handleSend = async () => {
     var _a;
     try {
-      if ((_a = window.api) == null ? void 0 : _a.sendToMCP) {
-        const res = await window.api.sendToMCP(prompt);
+      if ((_a = window.electronAPI) == null ? void 0 : _a.sendToMCP) {
+        const res = await window.electronAPI.sendToMCP(prompt);
         setResponse(res);
       } else {
         setResponse("Error: sendToMCP API is not available.");

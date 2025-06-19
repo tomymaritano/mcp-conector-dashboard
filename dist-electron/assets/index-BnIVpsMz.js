@@ -24400,7 +24400,7 @@ const MCPConsole = () => {
     setPrompt("");
     setLoading(true);
     try {
-      const res = await window.api.sendToMCP(prompt);
+      const res = await window.electronAPI.sendToMCP(prompt);
       setMessages((prev) => [...prev, { role: "mcp", content: res }]);
     } catch (err) {
       setMessages((prev) => [
