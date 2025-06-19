@@ -1,11 +1,12 @@
 import './App.css'
-import Welcome from './screens/Welcome'
+import MCPManager from './components/MCPManager'
+// import Welcome from './screens/Welcome'
 
 function App() {
 
   return (
     <>
-    <Welcome />
+<MCPManager />
     </>
   )
 }

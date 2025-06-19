@@ -12,7 +12,7 @@ const Welcome = () => {
   }, [])
 
   return (
-    <div className="flex items-center justify-center h-screen bg-zinc-900 text-white">
+    <div className="flex  items-center justify-center h-screen text-white">
       <div className="text-center animate-fade-in">
         <h1 className="text-4xl font-bold tracking-tight">Inkrun</h1>
         <p className="text-sm text-zinc-400 mt-2">Ideas que corren, palabras que quedan.</p>

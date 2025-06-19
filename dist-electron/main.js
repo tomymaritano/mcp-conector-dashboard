@@ -51,4 +51,37 @@ ipcMain.handle("stop-mcp", (_event, name) => {
     delete processes[name];
     win.webContents.send("mcp-status", { name, status: "offline" });
   }
+  ipcMain.handle("mcp:prompt", async (_event2, prompt) => {
+    const proc = processes["memory"];
+    if (!proc) return "❌ MCP memory no está corriendo.";
+    return new Promise((resolve) => {
+      let output = "";
+      const onData = (data) => {
+        output += data.toString();
+        if (output.trim().endsWith("\n") || output.includes("\n")) {
+          proc.stdout.off("data", onData);
+          resolve(output.trim());
+        }
+      };
+      proc.stdout.on("data", onData);
+      proc.stdin.write(`${prompt}
+`);
+    });
+  });
+});
+ipcMain.handle("send-to-mcp", async (_event, { name, prompt }) => {
+  const proc = processes[name];
+  if (!proc) return `❌ MCP "${name}" no está corriendo.`;
+  return new Promise((resolve) => {
+    let output = "";
+    const onData = (data) => {
+      output += data.toString();
+      if (output.trim().endsWith("\n") || output.includes("\n")) {
+        proc.stdout.off("data", onData);
+        resolve(output.trim());
+      }
+    };
+    proc.stdout.on("data", onData);
+    proc.stdin.write(`${prompt}\n`);
+  });
 });
