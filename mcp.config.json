@@ -13,7 +13,9 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "~/"
-      ]
+      ],
+      "type": "official",
+      "link": "https://github.com/modelcontextprotocol/server-filesystem"
     },
     "github": {
       "command": "npx",

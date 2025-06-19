@@ -1,5 +1,68 @@
 @import "tailwindcss";
 
-body {
-  background-color: white;
+/* 🎯 Variables de estilo */
+:root {
+  --bg-dark: #0f0f0f;
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --scroll-thumb: #10b981; /* emerald-500 para brillo sutil */
+  --text-primary: #d1fae5;
+  --accent: #22d3ee; /* cyan-400 */
+  --border-glass: rgba(255, 255, 255, 0.06);
+}
+
+/* 🌌 Fondo y fuente base */
+html, body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* 🧊 Fondo tipo vidrio con blur */
+.backdrop-glass {
+  @apply backdrop-blur-lg border rounded-xl p-4;
+  background: var(--bg-glass);
+  border-color: var(--border-glass);
+  box-shadow: inset 0 0 0 1px var(--border-glass);
+}
+
+/* 🔽 Scrollbar personalizada */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border-radius: 10px;
+}
+
+/* 🌍 Scroll global */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border-radius: 8px;
+}
+
+/* 🧠 Transiciones suaves */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* 💡 Estado MCP */
+.status-online {
+  color: #10b981;
+}
+.status-starting {
+  color: #fbbf24;
+}
+.status-offline {
+  color: #64748b;
+}
+.status-error {
+  color: #ef4444;
 }
