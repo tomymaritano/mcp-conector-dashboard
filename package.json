@@ -22,7 +22,8 @@
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^15.6.1",
     "tailwindcss": "^4.1.10",
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@modelcontextprotocol/server-memory": "^2025.4.25",
