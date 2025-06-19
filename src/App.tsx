@@ -1,10 +1,11 @@
 import './App.css'
+import Welcome from './screens/Welcome'
 
 function App() {
 
   return (
     <>
-    <div className='bg-red'>Inkrun</div>
+    <Welcome />
     </>
   )
 }
