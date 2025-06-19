@@ -4,13 +4,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import AIModelSelector from './AIModelSelector'
 
-declare global {
-  interface Window {
-    api: {
-      sendToMCP: (payload: { name: string; prompt: string }) => Promise<string>
-    }
-  }
-}
 
 interface Message {
   role: 'user' | 'mcp'
@@ -31,7 +24,7 @@ const MCPConsole: React.FC = () => {
     setLoading(true)
 
     try {
-      const res = await window.api.sendToMCP({ name: modelId, prompt })
+      const res = await window.electronAPI.sendToMCP({ name: modelId, prompt })
       setMessages(prev => [...prev, { role: 'mcp', content: res }])
     } catch (err) {
       setMessages(prev => [
