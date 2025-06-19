@@ -10,7 +10,11 @@ const AI_MODELS = [
   { id: 'grok', label: 'Grok (xAI)' },
 ]
 
-const AIModelSelector = () => {
+interface AIModelSelectorProps {
+  onSelect: (id: string) => void
+}
+
+const AIModelSelector: React.FC<AIModelSelectorProps> = ({ onSelect }) => {
   const [selected, setSelected] = useState(AI_MODELS[0])
 
   return (
@@ -32,7 +36,10 @@ const AIModelSelector = () => {
           {AI_MODELS.map(model => (
             <DropdownMenu.Item
               key={model.id}
-              onSelect={() => setSelected(model)}
+              onSelect={() => {
+                setSelected(model)
+                onSelect(model.id)
+              }}
               className={`flex items-center justify-between w-full px-3 py-2 rounded-md cursor-pointer text-sm hover:bg-white/10 ${
                 selected.id === model.id ? 'bg-white/10' : ''
               }`}
