@@ -1,38 +1,48 @@
-# React + TypeScript + Vite
+# Inkrun MCP Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta aplicación usa Electron y React para administrar distintos servidores MCP (Model Context Protocol) desde una interfaz gráfica.
 
-Currently, two official plugins are available:
+## Puesta en marcha
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+2. Inicia el modo de desarrollo:
+   ```bash
+   npm run dev
+   ```
+   Se abrirá una ventana de Electron con la UI.
 
-## Expanding the ESLint configuration
+## Configuración de `mcp.config.json`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+El archivo `mcp.config.json` define qué MCPs se pueden lanzar. Cada entrada indica el comando, sus argumentos y las variables de entorno necesarias. Sustituí los placeholders por tus credenciales reales. Ejemplo para el servidor de GitHub:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+```json
+{
+  "github": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-github"],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "<tu_token>"
+    }
+  }
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# inkrun
+Tokens habituales que deberás completar:
 
-``` These errors are common in MACOSX
-2025-06-18 23:06:39.174 Electron[71655:42236000] _TIPropertyValueIsValid called with 16 on nil context!
-2025-06-18 23:06:39.174 Electron[71655:42236000] imkxpc_getApplicationProperty:reply: called with incorrect property value 16, bailing.
-2025-06-18 23:06:39.174 Electron[71655:42236000] Text input context does not respond to _valueForTIProperty:
-11:07:08 PM [vite] page reload mcp.config.json
-```
+- `GITHUB_PERSONAL_ACCESS_TOKEN` para GitHub
+- `SLACK_BOT_TOKEN` y `SLACK_TEAM_ID` para Slack
+- `NOTION_TOKEN` para Notion
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` y `GOOGLE_REFRESH_TOKEN` para Google Drive
+- `OPENAI_API_KEY` para el servidor de OpenAI
+
+Guardá los cambios y la aplicación recargará la configuración automáticamente.
+
+## Uso de la interfaz
+
+Al arrancar la app verás una barra lateral con todos los MCPs listados. Usá el interruptor de cada uno para encenderlo o apagarlo. El estado puede ser `offline`, `starting`, `online` o `error`.
+
+En la consola principal tenés un selector de modelo de IA. Elegí el modelo, escribí tu prompt en el cuadro inferior y presioná **Enviar** o la tecla Enter. La respuesta del MCP aparecerá en el panel.
+
