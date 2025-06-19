@@ -19,7 +19,7 @@ interface Message {
 
 const MCPConsole: React.FC = () => {
   const [prompt, setPrompt] = useState('')
-  const [modelId, setModelId] = useState('openai-gpt4')
+  const [modelId, setModelId] = useState('openai')
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)

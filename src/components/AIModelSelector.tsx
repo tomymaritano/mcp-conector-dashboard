@@ -3,8 +3,8 @@ import { ChevronDown, Bot, Check } from 'lucide-react'
 import React, { useState } from 'react'
 
 const AI_MODELS = [
-  { id: 'openai-gpt4', label: 'OpenAI GPT-4' },
-  { id: 'claude-3', label: 'Anthropic Claude 3' },
+  { id: 'openai', label: 'OpenAI GPT-4' },
+  { id: 'anthropic', label: 'Anthropic Claude 3' },
   { id: 'mistral', label: 'Mistral 7B' },
   { id: 'llama', label: 'Meta LLaMA' },
   { id: 'grok', label: 'Grok (xAI)' },
