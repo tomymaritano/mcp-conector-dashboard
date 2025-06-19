@@ -72,9 +72,9 @@ ipcMain.handle('stop-mcp', (_event, name: string) => {
 
 })
 
-ipcMain.handle('mcp:prompt', async (_event, prompt: string) => {
-  const proc = processes['memory']
-  if (!proc) return '❌ MCP memory no está corriendo.'
+ipcMain.handle('send-to-mcp', async (_event, { name, prompt }: { name: string; prompt: string }) => {
+  const proc = processes[name]
+  if (!proc) return `❌ MCP "${name}" no está corriendo.`
 
   return new Promise((resolve) => {
     let output = ''
