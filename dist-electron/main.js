@@ -15,7 +15,7 @@ app.whenReady().then(() => {
     width: 1e3,
     height: 700,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.mjs")
       // También usa __dirname aquí
     }
   });
