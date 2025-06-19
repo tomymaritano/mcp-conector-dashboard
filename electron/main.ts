@@ -4,6 +4,9 @@ import fs from 'fs'
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 
 // 🧠 Corrección para tener __dirname en ESM
@@ -41,7 +44,10 @@ ipcMain.handle('start-mcp', (_event, name: string) => {
   const def = config.mcpServers[name]
   if (!def || processes[name]) return
 
-  const child = spawn(def.command, def.args, { shell: true })
+  const child = spawn(def.command, def.args, {
+    shell: true,
+    env: { ...process.env, ...(def.env || {}) },
+  })
   processes[name] = child
 
   win.webContents.send('mcp-status', { name, status: 'starting' })
