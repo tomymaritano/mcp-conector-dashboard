@@ -7,5 +7,5 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["../my-electron-vite-project/vite.config.ts"]
+  "include": ["vite.config.ts"]
 }
