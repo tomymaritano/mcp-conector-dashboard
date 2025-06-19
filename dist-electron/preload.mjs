@@ -1,22 +1,9 @@
 "use strict";
 const electron = require("electron");
-electron.contextBridge.exposeInMainWorld("ipcRenderer", {
-  on(...args) {
-    const [channel, listener] = args;
-    return electron.ipcRenderer.on(channel, (event, ...args2) => listener(event, ...args2));
-  },
-  off(...args) {
-    const [channel, ...omit] = args;
-    return electron.ipcRenderer.off(channel, ...omit);
-  },
-  send(...args) {
-    const [channel, ...omit] = args;
-    return electron.ipcRenderer.send(channel, ...omit);
-  },
-  invoke(...args) {
-    const [channel, ...omit] = args;
-    return electron.ipcRenderer.invoke(channel, ...omit);
+electron.contextBridge.exposeInMainWorld("electronAPI", {
+  startMCP: (name) => electron.ipcRenderer.invoke("start-mcp", name),
+  stopMCP: (name) => electron.ipcRenderer.invoke("stop-mcp", name),
+  onStatusUpdate: (callback) => {
+    electron.ipcRenderer.on("mcp-status", (_event, status) => callback(status));
   }
-  // You can expose other APTs you need here.
-  // ...
 });

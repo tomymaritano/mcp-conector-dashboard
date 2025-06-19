@@ -2,7 +2,7 @@
   "mcpServers": {
     "memory": {
       "command": "pnpm",
-      "args": ["exec", "server-memory"]
+      "args": ["exec", "server-memory", "--port", "5001"]
     }
   }
 }

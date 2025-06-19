@@ -29,3 +29,10 @@ export default {
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 # inkrun
+
+``` These errors are common in MACOSX
+2025-06-18 23:06:39.174 Electron[71655:42236000] _TIPropertyValueIsValid called with 16 on nil context!
+2025-06-18 23:06:39.174 Electron[71655:42236000] imkxpc_getApplicationProperty:reply: called with incorrect property value 16, bailing.
+2025-06-18 23:06:39.174 Electron[71655:42236000] Text input context does not respond to _valueForTIProperty:
+11:07:08 PM [vite] page reload mcp.config.json
+```
