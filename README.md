@@ -1,4 +1,4 @@
-# Inkrun MCP Manager
+#  MCP Manager
 
 Inkrun is an Electron + React application for launching Model Context Protocol (MCP) servers locally and chatting with them through a simple console interface.
 
