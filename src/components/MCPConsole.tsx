@@ -4,6 +4,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import AIModelSelector from './AIModelSelector'
 
+declare global {
+  interface Window {
+    api: {
+      sendToMCP: (payload: { name: string; prompt: string }) => Promise<string>
+    }
+  }
+}
 
 interface Message {
   role: 'user' | 'mcp'
@@ -12,6 +19,7 @@ interface Message {
 
 const MCPConsole: React.FC = () => {
   const [prompt, setPrompt] = useState('')
+  const [modelId, setModelId] = useState('openai-gpt4')
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
   const bottomRef = useRef<HTMLDivElement | null>(null)
@@ -22,8 +30,8 @@ const MCPConsole: React.FC = () => {
     setPrompt('')
     setLoading(true)
 
-      try {
-        const res = await window.electronAPI.sendToMCP({ name: 'memory', prompt })
+    try {
+      const res = await window.api.sendToMCP({ name: modelId, prompt })
       setMessages(prev => [...prev, { role: 'mcp', content: res }])
     } catch (err) {
       setMessages(prev => [
@@ -45,7 +53,7 @@ const MCPConsole: React.FC = () => {
   return (
     <div className="flex flex-col h-full w-full bg-black text-green-400 font-mono border border-green-500/30 rounded-xl shadow-inner shadow-green-500/10 p-4">
       <div className="flex-1 overflow-y-auto custom-scroll space-y-3 pr-2 mb-3">
-        <AIModelSelector />
+        <AIModelSelector onSelect={setModelId} />
         {messages.map((msg, idx) => (
           <div
             key={idx}
