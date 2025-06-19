@@ -1,22 +1,20 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { ChevronDown, Bot, Check } from 'lucide-react'
-import React, { useState } from 'react'
-
-const AI_MODELS = [
-  // The `id` values must match the keys defined in `mcp.config.json`
-  { id: 'openai', label: 'OpenAI GPT-4' },
-  { id: 'anthropic', label: 'Anthropic Claude 3' },
-  { id: 'mistral', label: 'Mistral 7B' },
-  { id: 'llama', label: 'Meta LLaMA' },
-  { id: 'grok', label: 'Grok (xAI)' },
-]
+import React, { useState, useEffect } from 'react'
 
 interface AIModelSelectorProps {
+  models: { id: string; label: string }[]
   onSelect: (id: string) => void
 }
 
-const AIModelSelector: React.FC<AIModelSelectorProps> = ({ onSelect }) => {
-  const [selected, setSelected] = useState(AI_MODELS[0])
+const AIModelSelector: React.FC<AIModelSelectorProps> = ({ models, onSelect }) => {
+  const [selected, setSelected] = useState(models[0])
+
+  useEffect(() => {
+    if (models.length > 0) {
+      setSelected(models[0])
+    }
+  }, [models])
 
   return (
     <DropdownMenu.Root>
@@ -34,7 +32,7 @@ const AIModelSelector: React.FC<AIModelSelectorProps> = ({ onSelect }) => {
           side="bottom"
           align="start"
         >
-          {AI_MODELS.map(model => (
+          {models.map(model => (
             <DropdownMenu.Item
               key={model.id}
               onSelect={() => {
